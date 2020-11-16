@@ -1,0 +1,7 @@
+.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+    padding: 0 0 0 0 !important;
+}
+.ant-picker-calendar-date-value{
+    padding: 4px 4px 0 0 !important;
+    margin: 0 4px;
+}

@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Calendar } from "antd";
-// import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
 import Modal from "./Modal";
 
 import { connect } from "react-redux";
 import { getTasks } from "../actions";
 
-import _, { forEach } from "lodash";
+
 
 class CalendarComp extends Component {
   constructor(props) {
@@ -28,12 +27,14 @@ class CalendarComp extends Component {
   render() {
     const filterTasks = (value) => {
       const { tasks } = this.props.tasks;
-      return tasks.filter((task) => task.taskDate === value);
+
+      return tasks.filter((task) => task.date.substring(0,10) === value);
     };
 
     const dateCellRender = (value) => {
       value = value.format("Y-M-D");
       const tasks = filterTasks(value);
+      console.log();
       return (
         <div style={{ space: "nowrap", position: "revert" }}>
           {tasks.map((task) => (
@@ -50,7 +51,7 @@ class CalendarComp extends Component {
                 backgroundColor: "#28a745",
               }}
             >
-              {task.taskContent}
+              {task.name}
             </li>
           ))}
         </div>

@@ -1,8 +1,7 @@
 import React from "react";
-import { Modal, Button, Input } from "antd";
+import { Modal } from "antd";
 import { connect } from "react-redux";
 import { addTask, deleteTask } from "../actions";
-import { v4 as uuid } from "uuid";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 
 class AddModal extends React.Component {
@@ -26,12 +25,10 @@ class AddModal extends React.Component {
   }
 
   handleOk = (e) => {
-
     if (this.state.task !== "") {
       const task = {
-        id: uuid(),
-        taskDate: this.state.date,
-        taskContent: this.state.task,
+        date: this.state.date,
+        name: this.state.task,
       };
       this.props.addTask(task);
     }
@@ -39,7 +36,6 @@ class AddModal extends React.Component {
       visible: false,
       task: "",
     });
-    console.log("rerender");
   };
 
   handleCancel = (e) => {
@@ -49,12 +45,10 @@ class AddModal extends React.Component {
   };
 
   onPressEnter = (e) => {
-    console.log(e.target)
     if ((e.key === "Enter" || e.keyCode === 13) && this.state.task !== "") {
       const task = {
-        id: uuid(),
-        taskDate: this.state.date,
-        taskContent: this.state.task,
+        date: this.state.date,
+        name: this.state.task,
       };
       this.props.addTask(task);
       this.setState({
@@ -63,19 +57,18 @@ class AddModal extends React.Component {
     }
   };
 
- onPlusClicked = e => {
-  if (this.state.task !== "") {
-    const task = {
-      id: uuid(),
-      taskDate: this.state.date,
-      taskContent: this.state.task,
-    };
-    this.props.addTask(task);
-    this.setState({
-      task: "",
-    });
-  }
- }
+  onPlusClicked = (e) => {
+    if (this.state.task !== "") {
+      const task = {
+        date: this.state.date,
+        name: this.state.task,
+      };
+      this.props.addTask(task);
+      this.setState({
+        task: "",
+      });
+    }
+  };
 
   render() {
     const tasks = this.props.filterTasks(this.state.date);
@@ -91,9 +84,9 @@ class AddModal extends React.Component {
             {tasks.map((task) => {
               return (
                 <li>
-                  {task.taskContent}{" "}
+                  {task.name}{" "}
                   <DeleteOutlined
-                    onClick={() => this.props.deleteTask(task.id)}
+                    onClick={() => this.props.deleteTask(task._id)}
                   />
                 </li>
               );
